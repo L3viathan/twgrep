@@ -8,7 +8,6 @@ Usage:
 	twgrep.py -r [-t|-a] [-1cvs] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] <pattern>
 	twgrep.py (-h | --help)
 	twgrep.py --version
-	twgrep.py [-t1cvas] -I
 
 Options:
 	-h --help                        Show this help screen
@@ -20,7 +19,8 @@ Options:
 	--mentioning=<mentioned_user>    Search for tweets mentioning
 	                                 specific user
 	--timestamp=<timestamp>          Search in timestamp
-	-s                               Search case-sensitive
+	-s                               Search case-sensitive (applies only
+		                             to tweet text)
 	-v                               invert matches
 	-t                               Pretty-print
 	-a                               Show complete tweet data
@@ -40,12 +40,12 @@ import re
 args=docopt(__doc__,version="twgrep v0.2.1")
 
 if args['-s']:
-	modifier = lambda x: x
+	modifier = lambda x: x # case-sensitive: do not change 
 else:
 	modifier = str.lower
 
 if args['-v']:
-	all_or_none = lambda x: not any(x)
+	all_or_none = lambda x: not any(x) # "not any" = "none"
 else:
 	all_or_none = all
 
@@ -78,4 +78,5 @@ for f in glob.glob("*.js"):
 			if args['-1']: # print only first match
 				sys.exit(0)
 
-print("Total matches:",count)
+if args['-c']:
+	print("Total matches:",count)
