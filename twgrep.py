@@ -5,6 +5,7 @@ What grep is for arbitrary text, and Tgrep2 is for syntax trees, twgrep aims to 
 
 Usage:
 	twgrep.py [-t|-a] [-1cvs] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] [<keywords>...]
+	twgrep.py -r [-t|-a] [-1cvs] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] <pattern>
 	twgrep.py (-h | --help)
 	twgrep.py --version
 	twgrep.py [-t1cvas] -I
@@ -33,6 +34,7 @@ from docopt import docopt
 import glob
 import json
 import sys
+import re
 
 args=docopt(__doc__,version="twgrep v0.2.1")
 
@@ -46,11 +48,14 @@ if args['-v']:
 else:
 	all_or_none = all
 
+if args['-r']:
+	regex = re.compile(args['<pattern>'])
+
 count=0
 
 for f in glob.glob("*.js"):
 	for tweet in reversed(json.loads(open(f).read()[32:])):
-		if all_or_none(modifier(word) in modifier(tweet["text"]) for word in args['<keywords>']):
+		if (not args['-r'] and all_or_none(modifier(word) in modifier(tweet["text"]) for word in args['<keywords>'])) or args['-r'] and regex.match(tweet["text"]):
 			if args['--client'] and args['--client'].lower() not in tweet.get("source","").lower():
 				continue
 			if args['--in-reply-to'] and args['--in-reply-to'].lower() != tweet.get('in_reply_to_screen_name',"").lower():
