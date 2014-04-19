@@ -56,7 +56,7 @@ count=0
 
 for f in glob.glob("*.js"):
 	for tweet in reversed(json.loads(open(f).read()[32:])):
-		if (not args['-r'] and all_or_none(modifier(word) in modifier(tweet["text"]) for word in args['<keywords>'])) or args['-r'] and regex.match(tweet["text"]):
+		if (not args['-r'] and all_or_none(modifier(word) in modifier(tweet["text"]) for word in args['<keywords>'])) or args['-r'] and regex.search(tweet["text"]):
 			if args['--client'] and args['--client'].lower() not in tweet.get("source","").lower():
 				continue
 			if args['--in-reply-to'] and args['--in-reply-to'].lower() != tweet.get('in_reply_to_screen_name',"").lower():
