@@ -9,7 +9,7 @@ Usage:
 	twgrep.py --version
 	twgrep.py [-t1cvas] -I
 
-Option:
+Options:
 	-h --help                        Show this help screen
 	--version                        Show version number
 	--path=<path-to-tweets>          Path of the tweet archive [default: ./]
