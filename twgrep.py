@@ -46,24 +46,27 @@ else:
 
 if args['-v']:
 	all_or_none = lambda x: not any(x) # "not any" = "none"
+	negate_maybe = lambda x: not x
 else:
 	all_or_none = all
+	negate_maybe = lambda x: x
 
 if args['-r']:
-	regex = re.compile(args['<pattern>'])
+	regex = re.compile(args['<pattern>']) # compile for performance
 
 count=0
 
 for f in glob.glob("*.js"):
 	for tweet in reversed(json.loads(open(f).read()[32:])):
-		if (not args['-r'] and all_or_none(modifier(word) in modifier(tweet["text"]) for word in args['<keywords>'])) or args['-r'] and regex.search(tweet["text"]):
-			if args['--client'] and args['--client'].lower() not in tweet.get("source","").lower():
+		# either not regex mode and all/none of the words are in the text, or regex mode and pattern matches (or doesn't, if -v)
+		if (not args['-r'] and all_or_none(modifier(word) in modifier(tweet["text"]) for word in args['<keywords>'])) or args['-r'] and negate_maybe(regex.search(tweet["text"])):
+			if args['--client'] and negate_maybe(args['--client'].lower() not in tweet.get("source","").lower()):
 				continue
-			if args['--in-reply-to'] and args['--in-reply-to'].lower() != tweet.get('in_reply_to_screen_name',"").lower():
+			if args['--in-reply-to'] and negate_maybe(args['--in-reply-to'].lower() != tweet.get('in_reply_to_screen_name',"").lower()):
 				continue
-			if args['--mentioning'] and args['--mentioning'].lower() not in map(str.lower,tweet.get('user_mentions')):
+			if args['--mentioning'] and negate_maybe(args['--mentioning'].lower() not in map(str.lower,tweet.get('user_mentions'))):
 				continue
-			if args['--timestamp'] and args['--timestamp'].lower() not in tweet.get("created_at","").lower():
+			if args['--timestamp'] and negate_maybe(args['--timestamp'].lower() not in tweet.get("created_at","").lower()):
 				continue
 			
 			if args['-t']:
