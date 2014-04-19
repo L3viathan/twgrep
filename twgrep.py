@@ -26,6 +26,7 @@ Options:
 	-a                               Show complete tweet data
 	-1                               Show only first result
 	-c                               Show count
+	-r                               Regex mode (applies only to tweet text)
 
 """
 
