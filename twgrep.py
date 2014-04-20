@@ -4,10 +4,13 @@
 What grep is for arbitrary text, and Tgrep2 is for syntax trees, twgrep aims to be for tweet archives.
 
 Usage:
-	twgrep.py [-t|-a] [-1cvsd] [--format=<format>] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] [<keywords>...]
-	twgrep.py -r [-t|-a] [-1cvsd] [--format=<format>] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] <pattern>
-	twgrep.py (-h | --help)
-	twgrep.py --version
+	twgrep.py [-t|-a] [-1cvsd] [--format=<format>] [--client=<client>]
+	          [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>]
+	          [--timestamp=<timestamp>] [--path=<path-to-tweets>] [<keywords>...]
+	twgrep.py -r [-t|-a] [-1cvsd] [--format=<format>] [--client=<client>]
+	          [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>]
+	          [--timestamp=<timestamp>] [--path=<path-to-tweets>] <pattern>
+	twgrep.py (-h | --help | --version)
 
 Options:
 	-h --help                        Show this help screen
@@ -47,7 +50,7 @@ import json
 import sys
 import re
 
-args=docopt(__doc__,version="twgrep v0.2.1")
+args=docopt(__doc__,version="twgrep v0.2.3")
 
 if args['-d']:
 	print("DOCOPT args:\n\n",args,"\n")
