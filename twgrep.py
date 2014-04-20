@@ -4,8 +4,8 @@
 What grep is for arbitrary text, and Tgrep2 is for syntax trees, twgrep aims to be for tweet archives.
 
 Usage:
-	twgrep.py [-t|-a] [-1cvs] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] [<keywords>...]
-	twgrep.py -r [-t|-a] [-1cvs] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] <pattern>
+	twgrep.py [-t|-a] [-1cvsd] [--format=<format>] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] [<keywords>...]
+	twgrep.py -r [-t|-a] [-1cvsd] [--format=<format>] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] <pattern>
 	twgrep.py (-h | --help)
 	twgrep.py --version
 
@@ -27,6 +27,17 @@ Options:
 	-1                               Show only first result
 	-c                               Show count
 	-r                               Regex mode (applies only to tweet text)
+	-d                               Print docopt debug information
+
+Output format:
+	When using --format, you can provide an arbitrary string containing special character sequences, which will be replaced while printing. A list of possible special characters is given here:
+
+	?user     Username
+	?name     Full name
+	?text     Tweet text
+	?time     Timestamp
+	?id       ID
+	
 """
 
 from docopt import docopt
@@ -37,6 +48,9 @@ import sys
 import re
 
 args=docopt(__doc__,version="twgrep v0.2.1")
+
+if args['-d']:
+	print("DOCOPT args:\n\n",args,"\n")
 
 if args['-s']:
 	modifier = lambda x: x # case-sensitive: do not change 
@@ -72,6 +86,8 @@ for f in glob.glob("*.js"):
 				print("\nhttps://twitter.com/"+tweet["user"]["screen_name"]+"/status/"+tweet["id_str"]," – ",tweet["created_at"]+":\n"+tweet["text"])
 			elif args['-a']:
 				print(tweet)
+			elif args['--format']: #print custom format
+				print(args['--format'].replace("?user",tweet['user']['screen_name']).replace("?text",tweet['text']).replace("?time",tweet['created_at']).replace("?id",tweet['id_str']).replace("?client",tweet['source']).replace("?name",tweet['user']['name']))
 			else:
 				print(tweet["text"])
 
