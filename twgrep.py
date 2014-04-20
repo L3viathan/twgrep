@@ -4,8 +4,8 @@
 What grep is for arbitrary text, and Tgrep2 is for syntax trees, twgrep aims to be for tweet archives.
 
 Usage:
-	twgrep.py [-t|-a] [-1cvs] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] [<keywords>...]
-	twgrep.py -r [-t|-a] [-1cvs] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] <pattern>
+	twgrep.py [-t|-a] [-1cvs] [--format=<format>] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] [<keywords>...]
+	twgrep.py -r [-t|-a] [-1cvs] [--format=<format>] [--client=<client>] [--in-reply-to=<user_replied_to>] [--mentioning=<mentioned_user>] [--timestamp=<timestamp>] [--path=<path-to-tweets>] <pattern>
 	twgrep.py (-h | --help)
 	twgrep.py --version
 
@@ -28,6 +28,9 @@ Options:
 	-1                               Show only first result
 	-c                               Show count
 	-r                               Regex mode (applies only to tweet text)
+
+Output format:
+	Foo bar.
 """
 
 from docopt import docopt
