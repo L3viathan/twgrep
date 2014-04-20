@@ -19,6 +19,7 @@ Options:
 	--mentioning=<mentioned_user>    Search for tweets mentioning
 	                                 specific user
 	--timestamp=<timestamp>          Search in timestamp
+	--format=<format>                Define output format. See remarks.
 	-s                               Search case-sensitive (applies only
 		                             to tweet text)
 	-v                               invert matches
@@ -27,7 +28,6 @@ Options:
 	-1                               Show only first result
 	-c                               Show count
 	-r                               Regex mode (applies only to tweet text)
-
 """
 
 from docopt import docopt
