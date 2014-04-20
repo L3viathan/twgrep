@@ -19,7 +19,6 @@ Options:
 	--mentioning=<mentioned_user>    Search for tweets mentioning
 	                                 specific user
 	--timestamp=<timestamp>          Search in timestamp
-	--format=<format>                Define output format. See remarks.
 	-s                               Search case-sensitive (applies only
 		                             to tweet text)
 	-v                               invert matches
