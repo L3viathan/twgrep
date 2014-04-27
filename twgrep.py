@@ -89,7 +89,7 @@ for f in glob.glob("*.js"):
 				print("\nhttps://twitter.com/"+tweet["user"]["screen_name"]+"/status/"+tweet["id_str"]," – ",tweet["created_at"]+":\n"+tweet["text"])
 			elif args['-a']:
 				print(tweet)
-			elif args['--format']: #print custom format
+			elif args['--format']: #print custom format. TODO: make more pythonic.
 				print(args['--format'].replace("?user",tweet['user']['screen_name']).replace("?text",tweet['text']).replace("?time",tweet['created_at']).replace("?id",tweet['id_str']).replace("?client",tweet['source']).replace("?name",tweet['user']['name']))
 			else:
 				print(tweet["text"])
