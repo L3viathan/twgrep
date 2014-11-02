@@ -95,7 +95,7 @@ for f in glob.glob("*.js"):
 				print("\nhttps://twitter.com/"+tweet["user"]["screen_name"]+"/status/"+tweet["id_str"]," – ",tweet["created_at"]+":\n"+tweet["text"])
 			elif args['-a']:
 				print(tweet)
-			elif args['--format']: #print custom format. TODO: make more pythonic.
+			elif args['--format']: #print custom format.
 				replacements = {
 					"?user": tweet["user"]["screen_name"],
 					"?text": tweet['text'],
