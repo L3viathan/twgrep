@@ -50,6 +50,12 @@ import json
 import sys
 import re
 
+def replaceDict(string, dictionary):
+	#naive version:
+	for key in dictionary:
+		string = string.replace(key,dictionary[key])
+	return string
+
 args=docopt(__doc__,version="twgrep v0.2.3")
 
 if args['-d']:
@@ -90,7 +96,15 @@ for f in glob.glob("*.js"):
 			elif args['-a']:
 				print(tweet)
 			elif args['--format']: #print custom format. TODO: make more pythonic.
-				print(args['--format'].replace("?user",tweet['user']['screen_name']).replace("?text",tweet['text']).replace("?time",tweet['created_at']).replace("?id",tweet['id_str']).replace("?client",tweet['source']).replace("?name",tweet['user']['name']))
+				replacements = {
+					"?user": tweet["user"]["screen_name"],
+					"?text": tweet['text'],
+					"?time": tweet['created_at'],
+					"?id": tweet['id_str'],
+					"?client": tweet['source'],
+					"?name": tweet['user']['name']
+				}
+				print(replaceDict(args['--format'],replacements))
 			else:
 				print(tweet["text"])
 
